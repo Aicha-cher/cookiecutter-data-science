@@ -1,0 +1,10 @@
+
+ARG VARIANT=3
+FROM mcr.microsoft.com/vscode/devcontainers/python:${VARIANT}
+
+WORKDIR /workspace/
+COPY ./src/ /workspace/
+RUN pip install -r requirements.txt
+
+
+# Install dependencies

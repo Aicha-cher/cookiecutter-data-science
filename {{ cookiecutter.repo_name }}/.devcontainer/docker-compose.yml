@@ -1,0 +1,55 @@
+version: '3'
+services:
+
+  python: 
+    container_name: python
+    build:
+      context: ..
+      dockerfile: ./.devcontainer/dockerfile 
+    stdin_open: true  #  equivalent of -i flag
+    tty: true #  equivalent of -t flag
+    volumes: 
+        - D:/My projects/docker_tuto3/src:/workspace:cached
+
+  
+  superset:
+      container_name: superset
+      image: tylerfowler/superset:0.37
+      ports:
+        - 8088:8088
+      volumes:
+        - D:/My projects/docker_tuto3/images/mysuperset:/superset
+      environment:
+        ADMIN_USERNAME: aicha
+        ADMIN_PWD: isaac512
+      depends_on: 
+        - postgres
+
+
+  postgres:
+    container_name: postgres
+    restart: unless-stopped
+    image: postgres:12.4
+    ports:
+      - 5432:5432
+    environment: 
+      POSTGRES_USER: aicha
+      POSTGRES_DB: aicha
+      POSTGRES_PASSWORD: isaac512
+    volumes:
+      - data:/var/lib/postgresql/data
+    
+  pgweb:
+    container_name: pgweb  # optional
+    restart: unless-stopped
+    #restart: always  # optional
+    image: sosedoff/pgweb
+    ports: 
+      - "8081:8081" 
+    environment:
+      - DATABASE_URL=postgres://aicha:isaac512@postgres:5432/postgres?sslmode=disable # @postgres is the name of sdb service 
+    depends_on:
+     - postgres  # my database container is called postgres, not db
+  
+volumes: 
+  data:
