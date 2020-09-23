@@ -2,7 +2,7 @@ version: '3'
 services:
 
   python: 
-    container_name: python
+    container_name: "{{cookiecutter.project_name}}_python"
     build:
       context: ..
       dockerfile: ./.devcontainer/dockerfile 
@@ -13,7 +13,7 @@ services:
 
   
   superset:
-      container_name: superset
+      container_name: "{{cookiecutter.project_name}}_superset"
       image: tylerfowler/superset:0.37
       ports:
         - 8088:8088
@@ -27,7 +27,7 @@ services:
 
 
   postgres:
-    container_name: postgres
+    container_name: "{{cookiecutter.project_name}}_postgres"
     restart: unless-stopped
     image: postgres:12.4
     ports:
@@ -40,7 +40,7 @@ services:
       - data:/var/lib/postgresql/data
     
   pgweb:
-    container_name: pgweb  # optional
+    container_name: "{{cookiecutter.project_name}}_pgweb"  # optional
     restart: unless-stopped
     #restart: always  # optional
     image: sosedoff/pgweb
