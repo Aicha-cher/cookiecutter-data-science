@@ -1,7 +1,7 @@
 {
     "name": "docker for  data science",
     "dockerComposeFile": "docker-compose.yml",
-	"service": "python",
+	"service": "{{cookiecutter.project_name}}_python",
 	"workspaceFolder": "/workspace",
 
 	// Set *default* container specific settings.json values on container create.
